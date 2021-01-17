@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Form widget codebase</title>
+        <meta charset="utf-8">
+    </head>
+    <body>
+
+        <div id="app">
+            <div class="chess-bord">
+                <chess-board id="board3"
+                    draggable-pieces
+                    spare-pieces
+                    drop-off-board="trash">
+                </chess-board>
+                <button id="startBtn">Start Position</button>
+                <button id="clearBtn">Clear Board</button>
+            </div>
+        </div>
+
+        <script type="module" src="../node_modules/chessboard-element/index.js"></script>
+        <script src="scripts/main.js"></script>
+
+    </body>
+</html>
