@@ -5,3 +5,10 @@ import "../styles/main.scss";
 
 
 console.log("hello world!");
+
+
+startBtn.addEventListener('click',
+    () => board.start());
+
+clearBtn.addEventListener('click',
+    () => board.clear());
