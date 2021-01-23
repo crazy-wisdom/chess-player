@@ -30,11 +30,11 @@ board.addEventListener('drag-start', (e) => {
 });
 
 
-function makeBestMove(game, depth) {
+function makeBestMove(game, board, depth) {
   let bestMove = AlphaBeta.minimaxRoot(game, depth, true);
   game.move(bestMove);
   setTimeout(function() {
-    board.position(game.fen());
+    board.setPosition(game.fen());
   }, 100);
 }
 
@@ -68,7 +68,7 @@ board.addEventListener('drop', (e) => {
   }
 
   window.setTimeout(function() {
-    // makeBestMove(game, 3);
+    makeBestMove(game, board, 3);
   }, 250);
 });
 

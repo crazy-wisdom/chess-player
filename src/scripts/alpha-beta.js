@@ -1,81 +1,199 @@
 
+import { Chess } from 'chess.js';
+
+var game = new Chess();
+
 const pawnSquareTableVals = [
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [50, 50, 50, 50, 50, 50, 50, 50],
-  [10, 10, 20, 30, 30, 20, 10, 10],
-  [5, 5, 10, 25, 25, 10, 5, 5],
-  [0, 0, 0, 20, 20, 0, 0, 0],
-  [5, -5, -10, 0, 0, -10, -5, 5],
-  [5, 10, 10, -20, -20, 10, 10, 5],
-  [0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0],
+[50, 50, 50, 50, 50, 50, 50, 50],
+[10, 10, 20, 30, 30, 20, 10, 10],
+[5, 5, 10, 25, 25, 10, 5, 5],
+[0, 0, 0, 20, 20, 0, 0, 0],
+[5, -5, -10, 0, 0, -10, -5, 5],
+[5, 10, 10, -20, -20, 10, 10, 5],
+[0, 0, 0, 0, 0, 0, 0, 0]
 ];
 
 const pawnSquareTableValsBlack = pawnSquareTableVals.slice().reverse();
 
 const knightSquareTableVals = [
-  [-50, -40, -30, -30, -30, -30, -40, -50],
-  [-40, -20, 0, 0, 0, 0, -20, -40],
-  [-30, 0, 10, 15, 15, 10, 0, -30],
-  [-30, 5, 15, 20, 20, 15, 5, -30],
-  [-30, 0, 15, 20, 20, 15, 0, -30],
-  [-30, 5, 10, 15, 15, 10, 5, -30],
-  [-40, -20, 0, 5, 5, 0, -20, -40],
-  [-50, -40, -30, -30, -30, -30, -40, -50]
+[-50, -40, -30, -30, -30, -30, -40, -50],
+[-40, -20, 0, 0, 0, 0, -20, -40],
+[-30, 0, 10, 15, 15, 10, 0, -30],
+[-30, 5, 15, 20, 20, 15, 5, -30],
+[-30, 0, 15, 20, 20, 15, 0, -30],
+[-30, 5, 10, 15, 15, 10, 5, -30],
+[-40, -20, 0, 5, 5, 0, -20, -40],
+[-50, -40, -30, -30, -30, -30, -40, -50]
 ];
 
 const knightSquareTableValsBlack = knightSquareTableVals.slice().reverse();
 
 const bishopSquareTableVals = [
-  [-20, -10, -10, -10, -10, -10, -10, -20],
-  [-10, 0, 0, 0, 0, 0, 0, -10],
-  [-10, 0, 5, 10, 10, 5, 0, -10],
-  [-10, 5, 5, 10, 10, 5, 5, -10],
-  [-10, 0, 10, 10, 10, 10, 0, -10],
-  [-10, 10, 10, 10, 10, 10, 10, -10],
-  [-10, 5, 0, 0, 0, 0, 5, -10],
-  [-20, -10, -10, -10, -10, -10, -10, -20]
+[-20, -10, -10, -10, -10, -10, -10, -20],
+[-10, 0, 0, 0, 0, 0, 0, -10],
+[-10, 0, 5, 10, 10, 5, 0, -10],
+[-10, 5, 5, 10, 10, 5, 5, -10],
+[-10, 0, 10, 10, 10, 10, 0, -10],
+[-10, 10, 10, 10, 10, 10, 10, -10],
+[-10, 5, 0, 0, 0, 0, 5, -10],
+[-20, -10, -10, -10, -10, -10, -10, -20]
 ];
 
 const bishopSquareTableValsBlack = bishopSquareTableVals.slice().reverse();
 
 const rookSquareTableVals = [
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [5, 10, 10, 10, 10, 10, 10, 5],
-  [-5, 0, 0, 0, 0, 0, 0, -5],
-  [-5, 0, 0, 0, 0, 0, 0, -5],
-  [-5, 0, 0, 0, 0, 0, 0, -5],
-  [-5, 0, 0, 0, 0, 0, 0, -5],
-  [-5, 0, 0, 0, 0, 0, 0, -5],
-  [0, 0, 0, 5, 5, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0],
+[5, 10, 10, 10, 10, 10, 10, 5],
+[-5, 0, 0, 0, 0, 0, 0, -5],
+[-5, 0, 0, 0, 0, 0, 0, -5],
+[-5, 0, 0, 0, 0, 0, 0, -5],
+[-5, 0, 0, 0, 0, 0, 0, -5],
+[-5, 0, 0, 0, 0, 0, 0, -5],
+[0, 0, 0, 5, 5, 0, 0, 0]
 ];
 
 const rookSquareTableValsBlack = rookSquareTableVals.slice().reverse();
 
 const queenSquareTableVals = [
-  [-20, -10, -10, -5, -5, -10, -10, -20],
-  [-10, 0, 0, 0, 0, 0, 0, -10],
-  [-10, 0, 5, 5, 5, 5, 0, -10],
-  [-5, 0, 5, 5, 5, 5, 0, -5],
-  [0, 0, 5, 5, 5, 5, 0, -5],
-  [-10, 5, 5, 5, 5, 5, 0, -10],
-  [-10, 0, 5, 0, 0, 0, 0, -10],
-  [-20, -10, -10, -5, -5, -10, -10, -20]
+[-20, -10, -10, -5, -5, -10, -10, -20],
+[-10, 0, 0, 0, 0, 0, 0, -10],
+[-10, 0, 5, 5, 5, 5, 0, -10],
+[-5, 0, 5, 5, 5, 5, 0, -5],
+[0, 0, 5, 5, 5, 5, 0, -5],
+[-10, 5, 5, 5, 5, 5, 0, -10],
+[-10, 0, 5, 0, 0, 0, 0, -10],
+[-20, -10, -10, -5, -5, -10, -10, -20]
 ];
 
 const queenSquareTableValsBlack = queenSquareTableVals.slice().reverse();
 
 const kingSquareTableVals = [
-  [-30, -40, -40, -50, -50, -40, -40, -30],
-  [-30, -40, -40, -50, -50, -40, -40, -30],
-  [-30, -40, -40, -50, -50, -40, -40, -30],
-  [-30, -40, -40, -50, -50, -40, -40, -30],
-  [-20, -30, -30, -40, -40, -30, -30, -20],
-  [-10, -20, -20, -20, -20, -20, -20, -10],
-  [20, 20, 0, 0, 0, 0, 20, 20],
-  [20, 30, 10, 0, 0, 10, 30, 20]
+[-30, -40, -40, -50, -50, -40, -40, -30],
+[-30, -40, -40, -50, -50, -40, -40, -30],
+[-30, -40, -40, -50, -50, -40, -40, -30],
+[-30, -40, -40, -50, -50, -40, -40, -30],
+[-20, -30, -30, -40, -40, -30, -30, -20],
+[-10, -20, -20, -20, -20, -20, -20, -10],
+[20, 20, 0, 0, 0, 0, 20, 20],
+[20, 30, 10, 0, 0, 10, 30, 20]
 ];
 
 const kingSquareTableValsBlack = kingSquareTableVals.slice().reverse();
+
+const pawnSquareTable = [];
+
+const knightSquareTable = [];
+
+const bishopSquareTable = [];
+
+const rookSquareTable = [];
+
+const queenSquareTable = [];
+
+const kingSquareTable = [];
+
+let numSquares = [];
+
+game.SQUARES.forEach(square => {
+let value;
+if (square.charAt(1) === "8") {
+  value = 0;
+} else if (square.charAt(1) === "7") {
+  value = 1;
+} else if (square.charAt(1) === "6") {
+  value = 2;
+} else if (square.charAt(1) === "5") {
+  value = 3;
+} else if (square.charAt(1) === "4") {
+  value = 4;
+} else if (square.charAt(1) === "3") {
+  value = 5;
+} else if (square.charAt(1) === "2") {
+  value = 6;
+} else if (square.charAt(1) === "1") {
+  value = 7;
+}
+
+if (square.charAt(0) === "a") {
+  numSquares.push({
+    name: square,
+    num: [0, value]
+  });
+} else if (square.charAt(0) === "b") {
+  numSquares.push({
+    name: square,
+    num: [1, value]
+  });
+} else if (square.charAt(0) === "c") {
+  numSquares.push({
+    name: square,
+    num: [2, value]
+  });
+} else if (square.charAt(0) === "d") {
+  numSquares.push({
+    name: square,
+    num: [3, value]
+  });
+} else if (square.charAt(0) === "e") {
+  numSquares.push({
+    name: square,
+    num: [4, value]
+  });
+} else if (square.charAt(0) === "f") {
+  numSquares.push({
+    name: square,
+    num: [5, value]
+  });
+} else if (square.charAt(0) === "g") {
+  numSquares.push({
+    name: square,
+    num: [6, value]
+  });
+} else if (square.charAt(0) === "h") {
+  numSquares.push({
+    name: square,
+    num: [7, value]
+  });
+}
+});
+
+numSquares.forEach(square => {
+pawnSquareTable.push({
+  square: square,
+  wValue: pawnSquareTableVals[square.num[1]][square.num[0]],
+  bValue: pawnSquareTableValsBlack[square.num[1]][square.num[0]]
+});
+
+knightSquareTable.push({
+  square: square,
+  wValue: knightSquareTableVals[square.num[1]][square.num[0]],
+  bValue: knightSquareTableValsBlack[square.num[1]][square.num[0]]
+});
+
+bishopSquareTable.push({
+  square: square,
+  wValue: bishopSquareTableVals[square.num[1]][square.num[0]],
+  bValue: bishopSquareTableValsBlack[square.num[1]][square.num[0]]
+});
+
+rookSquareTable.push({
+  square: square,
+  wValue: rookSquareTableVals[square.num[1]][square.num[0]],
+  bValue: rookSquareTableValsBlack[square.num[1]][square.num[0]]
+});
+
+queenSquareTable.push({
+  square: square,
+  wValue: queenSquareTableVals[square.num[1]][square.num[0]],
+  bValue: queenSquareTableValsBlack[square.num[1]][square.num[0]]
+});
+kingSquareTable.push({
+  square: square,
+  wValue: kingSquareTableVals[square.num[1]][square.num[0]],
+  bValue: kingSquareTableValsBlack[square.num[1]][square.num[0]]
+});
+});
 
 
 
@@ -155,6 +273,7 @@ const getPieceValue = function(piece, square) {
     return -value;
   }
 };
+
 
 
 
