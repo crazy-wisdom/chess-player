@@ -8,21 +8,13 @@ import { Chess } from 'chess.js';
 import "../styles/main.scss";
 
 
-console.log("hello world!");
-
-// const { Chess } = require('../../node_modules/chess.js/chess.js')
-// import { Chess } from 'chess.js';
-
-
-startBtn.addEventListener('click',
-    () => board.start());
-
-clearBtn.addEventListener('click',
-    () => board.clear());
-
-
 const board = document.querySelector('chess-board');
 const game = new Chess();
+const statusElement = document.querySelector('#status');
+const fenElement = document.querySelector('#fen');
+const pgnElement = document.querySelector('#pgn');
+
+
 
 board.addEventListener('drag-start', (e) => {
   const {source, piece, position, orientation} = e.detail;
@@ -33,25 +25,13 @@ board.addEventListener('drag-start', (e) => {
     return;
   }
 
-  // only pick up pieces for White
-  if (piece.search(/^b/) !== -1) {
+  // only pick up pieces for the side to move
+  if ((game.turn() === 'w' && piece.search(/^b/) !== -1) ||
+      (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
     e.preventDefault();
     return;
   }
 });
-
-function makeRandomMove () {
-  let possibleMoves = game.moves();
-
-  // game over
-  if (possibleMoves.length === 0) {
-    return;
-  }
-
-  const randomIdx = Math.floor(Math.random() * possibleMoves.length);
-  game.move(possibleMoves[randomIdx]);
-  board.setPosition(game.fen());
-}
 
 board.addEventListener('drop', (e) => {
   const {source, target, setAction} = e.detail;
@@ -66,11 +46,9 @@ board.addEventListener('drop', (e) => {
   // illegal move
   if (move === null) {
     setAction('snapback');
-    return;
   }
 
-  // make random legal move for black
-  window.setTimeout(makeRandomMove, 250);
+  updateStatus();
 });
 
 // update the board position after the piece snap
@@ -78,3 +56,36 @@ board.addEventListener('drop', (e) => {
 board.addEventListener('snap-end', (e) => {
   board.setPosition(game.fen());
 });
+
+function updateStatus () {
+  let status = '';
+
+  let moveColor = 'White';
+  if (game.turn() === 'b') {
+    moveColor = 'Black';
+  }
+
+  if (game.in_checkmate()) {
+    // checkmate?
+    status = `Game over, ${moveColor} is in checkmate.`;
+  } else if (game.in_draw()) {
+    // draw?
+    status = 'Game over, drawn position';
+  } else {
+    // game still on
+    status = `${moveColor} to move`;
+
+    // check?
+    if (game.in_check()) {
+      status += `, ${moveColor} is in check`;
+    }
+  }
+
+  statusElement.innerHTML = status;
+  fenElement.innerHTML = game.fen();
+  pgnElement.innerHTML = game.pgn();
+}
+
+updateStatus();
+
+board.start();
