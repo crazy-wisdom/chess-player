@@ -68,7 +68,7 @@ board.addEventListener('drop', (e) => {
   }
 
   window.setTimeout(function() {
-    makeBestMove(game, board, 2);
+    makeBestMove(game, board, 3);
   }, 250);
 });
 

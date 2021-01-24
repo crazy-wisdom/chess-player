@@ -140,11 +140,13 @@ const evaluateBoard = function(board) {
 
 
 export const minimaxRoot = function(game, depth, maximisingPlayer) {
-  var bestMove = -Infinity;
-  var bestMoveFound;
+  let bestMove = -Infinity;
+  let bestMoveFound;
+  let moves = game.moves();
+  let count = moves.length;
 
-  for (var i = 0; i < game.moves().length; i++) {
-    game.move(game.moves()[i]);
+  for (var i = 0; i < count; i++) {
+    game.move(moves[i]);
     var value = minimax(
       game,
       depth - 1,
@@ -155,7 +157,7 @@ export const minimaxRoot = function(game, depth, maximisingPlayer) {
     game.undo();
     if (value >= bestMove) {
       bestMove = value;
-      bestMoveFound = game.moves()[i];
+      bestMoveFound = moves[i];
     }
   }
   return bestMoveFound;
@@ -166,10 +168,12 @@ export function minimax(game, depth, alpha, beta, maximisingPlayer) {
   if (depth === 0) {
     return -evaluateBoard(game);
   }
+
+  let moves = game.moves();
   if (maximisingPlayer) {
     let value = -Infinity;
-    for (let i = 0; i < game.moves().length; i++) {
-      game.move(game.moves()[i]);
+    for (let i = 0; i < moves.length; i++) {
+      game.move(moves[i]);
       value = Math.max(value, minimax(game, depth - 1, alpha, beta, false));
       game.undo();
       alpha = Math.max(alpha, value);
@@ -181,8 +185,8 @@ export function minimax(game, depth, alpha, beta, maximisingPlayer) {
     return value;
   } else {
     let value = Infinity;
-    for (let i = 0; i < game.moves().length; i++) {
-      game.move(game.moves()[i]);
+    for (let i = 0; i < moves.length; i++) {
+      game.move(moves[i]);
       value = Math.min(value, minimax(game, depth - 1, alpha, beta, true));
       game.undo();
       beta = Math.min(beta, value);
