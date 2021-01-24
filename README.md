@@ -1,4 +1,6 @@
 # chess-player
+Practice minimax algorithm on chess.
+
 
 ### Guide
 ```
