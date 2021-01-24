@@ -1,293 +1,140 @@
+const pstWhite = {
+  p: [
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [50, 50, 50, 50, 50, 50, 50, 50],
+    [10, 10, 20, 30, 30, 20, 10, 10],
+    [5, 5, 10, 25, 25, 10, 5, 5],
+    [0, 0, 0, 20, 20, 0, 0, 0],
+    [5, -5, -10, 0, 0, -10, -5, 5],
+    [5, 10, 10, -20, -20, 10, 10, 5],
+    [0, 0, 0, 0, 0, 0, 0, 0]
+  ],
 
-import { Chess } from 'chess.js';
+  n: [
+    [-50, -40, -30, -30, -30, -30, -40, -50],
+    [-40, -20, 0, 0, 0, 0, -20, -40],
+    [-30, 0, 10, 15, 15, 10, 0, -30],
+    [-30, 5, 15, 20, 20, 15, 5, -30],
+    [-30, 0, 15, 20, 20, 15, 0, -30],
+    [-30, 5, 10, 15, 15, 10, 5, -30],
+    [-40, -20, 0, 5, 5, 0, -20, -40],
+    [-50, -40, -30, -30, -30, -30, -40, -50]
+  ],
 
-var game = new Chess();
+  b: [
+    [-20, -10, -10, -10, -10, -10, -10, -20],
+    [-10, 0, 0, 0, 0, 0, 0, -10],
+    [-10, 0, 5, 10, 10, 5, 0, -10],
+    [-10, 5, 5, 10, 10, 5, 5, -10],
+    [-10, 0, 10, 10, 10, 10, 0, -10],
+    [-10, 10, 10, 10, 10, 10, 10, -10],
+    [-10, 5, 0, 0, 0, 0, 5, -10],
+    [-20, -10, -10, -10, -10, -10, -10, -20]
+  ],
 
-const pawnSquareTableVals = [
-[0, 0, 0, 0, 0, 0, 0, 0],
-[50, 50, 50, 50, 50, 50, 50, 50],
-[10, 10, 20, 30, 30, 20, 10, 10],
-[5, 5, 10, 25, 25, 10, 5, 5],
-[0, 0, 0, 20, 20, 0, 0, 0],
-[5, -5, -10, 0, 0, -10, -5, 5],
-[5, 10, 10, -20, -20, 10, 10, 5],
-[0, 0, 0, 0, 0, 0, 0, 0]
-];
+  r: [
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [5, 10, 10, 10, 10, 10, 10, 5],
+    [-5, 0, 0, 0, 0, 0, 0, -5],
+    [-5, 0, 0, 0, 0, 0, 0, -5],
+    [-5, 0, 0, 0, 0, 0, 0, -5],
+    [-5, 0, 0, 0, 0, 0, 0, -5],
+    [-5, 0, 0, 0, 0, 0, 0, -5],
+    [0, 0, 0, 5, 5, 0, 0, 0]
+  ],
 
-const pawnSquareTableValsBlack = pawnSquareTableVals.slice().reverse();
+  q: [
+    [-20, -10, -10, -5, -5, -10, -10, -20],
+    [-10, 0, 0, 0, 0, 0, 0, -10],
+    [-10, 0, 5, 5, 5, 5, 0, -10],
+    [-5, 0, 5, 5, 5, 5, 0, -5],
+    [0, 0, 5, 5, 5, 5, 0, -5],
+    [-10, 5, 5, 5, 5, 5, 0, -10],
+    [-10, 0, 5, 0, 0, 0, 0, -10],
+    [-20, -10, -10, -5, -5, -10, -10, -20]
+  ],
 
-const knightSquareTableVals = [
-[-50, -40, -30, -30, -30, -30, -40, -50],
-[-40, -20, 0, 0, 0, 0, -20, -40],
-[-30, 0, 10, 15, 15, 10, 0, -30],
-[-30, 5, 15, 20, 20, 15, 5, -30],
-[-30, 0, 15, 20, 20, 15, 0, -30],
-[-30, 5, 10, 15, 15, 10, 5, -30],
-[-40, -20, 0, 5, 5, 0, -20, -40],
-[-50, -40, -30, -30, -30, -30, -40, -50]
-];
+  k: [
+    [-30, -40, -40, -50, -50, -40, -40, -30],
+    [-30, -40, -40, -50, -50, -40, -40, -30],
+    [-30, -40, -40, -50, -50, -40, -40, -30],
+    [-30, -40, -40, -50, -50, -40, -40, -30],
+    [-20, -30, -30, -40, -40, -30, -30, -20],
+    [-10, -20, -20, -20, -20, -20, -20, -10],
+    [20, 20, 0, 0, 0, 0, 20, 20],
+    [20, 30, 10, 0, 0, 10, 30, 20]
+  ]
+};
 
-const knightSquareTableValsBlack = knightSquareTableVals.slice().reverse();
-
-const bishopSquareTableVals = [
-[-20, -10, -10, -10, -10, -10, -10, -20],
-[-10, 0, 0, 0, 0, 0, 0, -10],
-[-10, 0, 5, 10, 10, 5, 0, -10],
-[-10, 5, 5, 10, 10, 5, 5, -10],
-[-10, 0, 10, 10, 10, 10, 0, -10],
-[-10, 10, 10, 10, 10, 10, 10, -10],
-[-10, 5, 0, 0, 0, 0, 5, -10],
-[-20, -10, -10, -10, -10, -10, -10, -20]
-];
-
-const bishopSquareTableValsBlack = bishopSquareTableVals.slice().reverse();
-
-const rookSquareTableVals = [
-[0, 0, 0, 0, 0, 0, 0, 0],
-[5, 10, 10, 10, 10, 10, 10, 5],
-[-5, 0, 0, 0, 0, 0, 0, -5],
-[-5, 0, 0, 0, 0, 0, 0, -5],
-[-5, 0, 0, 0, 0, 0, 0, -5],
-[-5, 0, 0, 0, 0, 0, 0, -5],
-[-5, 0, 0, 0, 0, 0, 0, -5],
-[0, 0, 0, 5, 5, 0, 0, 0]
-];
-
-const rookSquareTableValsBlack = rookSquareTableVals.slice().reverse();
-
-const queenSquareTableVals = [
-[-20, -10, -10, -5, -5, -10, -10, -20],
-[-10, 0, 0, 0, 0, 0, 0, -10],
-[-10, 0, 5, 5, 5, 5, 0, -10],
-[-5, 0, 5, 5, 5, 5, 0, -5],
-[0, 0, 5, 5, 5, 5, 0, -5],
-[-10, 5, 5, 5, 5, 5, 0, -10],
-[-10, 0, 5, 0, 0, 0, 0, -10],
-[-20, -10, -10, -5, -5, -10, -10, -20]
-];
-
-const queenSquareTableValsBlack = queenSquareTableVals.slice().reverse();
-
-const kingSquareTableVals = [
-[-30, -40, -40, -50, -50, -40, -40, -30],
-[-30, -40, -40, -50, -50, -40, -40, -30],
-[-30, -40, -40, -50, -50, -40, -40, -30],
-[-30, -40, -40, -50, -50, -40, -40, -30],
-[-20, -30, -30, -40, -40, -30, -30, -20],
-[-10, -20, -20, -20, -20, -20, -20, -10],
-[20, 20, 0, 0, 0, 0, 20, 20],
-[20, 30, 10, 0, 0, 10, 30, 20]
-];
-
-const kingSquareTableValsBlack = kingSquareTableVals.slice().reverse();
-
-const pawnSquareTable = [];
-
-const knightSquareTable = [];
-
-const bishopSquareTable = [];
-
-const rookSquareTable = [];
-
-const queenSquareTable = [];
-
-const kingSquareTable = [];
-
-let numSquares = [];
-
-game.SQUARES.forEach(square => {
-let value;
-if (square.charAt(1) === "8") {
-  value = 0;
-} else if (square.charAt(1) === "7") {
-  value = 1;
-} else if (square.charAt(1) === "6") {
-  value = 2;
-} else if (square.charAt(1) === "5") {
-  value = 3;
-} else if (square.charAt(1) === "4") {
-  value = 4;
-} else if (square.charAt(1) === "3") {
-  value = 5;
-} else if (square.charAt(1) === "2") {
-  value = 6;
-} else if (square.charAt(1) === "1") {
-  value = 7;
-}
-
-if (square.charAt(0) === "a") {
-  numSquares.push({
-    name: square,
-    num: [0, value]
-  });
-} else if (square.charAt(0) === "b") {
-  numSquares.push({
-    name: square,
-    num: [1, value]
-  });
-} else if (square.charAt(0) === "c") {
-  numSquares.push({
-    name: square,
-    num: [2, value]
-  });
-} else if (square.charAt(0) === "d") {
-  numSquares.push({
-    name: square,
-    num: [3, value]
-  });
-} else if (square.charAt(0) === "e") {
-  numSquares.push({
-    name: square,
-    num: [4, value]
-  });
-} else if (square.charAt(0) === "f") {
-  numSquares.push({
-    name: square,
-    num: [5, value]
-  });
-} else if (square.charAt(0) === "g") {
-  numSquares.push({
-    name: square,
-    num: [6, value]
-  });
-} else if (square.charAt(0) === "h") {
-  numSquares.push({
-    name: square,
-    num: [7, value]
-  });
-}
-});
-
-numSquares.forEach(square => {
-pawnSquareTable.push({
-  square: square,
-  wValue: pawnSquareTableVals[square.num[1]][square.num[0]],
-  bValue: pawnSquareTableValsBlack[square.num[1]][square.num[0]]
-});
-
-knightSquareTable.push({
-  square: square,
-  wValue: knightSquareTableVals[square.num[1]][square.num[0]],
-  bValue: knightSquareTableValsBlack[square.num[1]][square.num[0]]
-});
-
-bishopSquareTable.push({
-  square: square,
-  wValue: bishopSquareTableVals[square.num[1]][square.num[0]],
-  bValue: bishopSquareTableValsBlack[square.num[1]][square.num[0]]
-});
-
-rookSquareTable.push({
-  square: square,
-  wValue: rookSquareTableVals[square.num[1]][square.num[0]],
-  bValue: rookSquareTableValsBlack[square.num[1]][square.num[0]]
-});
-
-queenSquareTable.push({
-  square: square,
-  wValue: queenSquareTableVals[square.num[1]][square.num[0]],
-  bValue: queenSquareTableValsBlack[square.num[1]][square.num[0]]
-});
-kingSquareTable.push({
-  square: square,
-  wValue: kingSquareTableVals[square.num[1]][square.num[0]],
-  bValue: kingSquareTableValsBlack[square.num[1]][square.num[0]]
-});
-});
-
-
-
-const getPieceValue = function(piece, square) {
-  if (piece === null) {
-    return 0;
-  }
-  const getAbsoluteValue = function(piece) {
-    let value;
-
-    if (piece.type === "p") {
-      value = 100;
-    } else if (piece.type === "r") {
-      value = 500;
-    } else if (piece.type === "n") {
-      value = 320;
-    } else if (piece.type === "b") {
-      value = 330;
-    } else if (piece.type === "q") {
-      value = 900;
-    } else if (piece.type === "k") {
-      value = 20000;
-    }
-
-    return value;
-  };
-
-  const getSquareValue = function(piece, square) {
-    if (piece.color === "w") {
-      if (piece.type === "p") {
-        let val = pawnSquareTable.find(obj => obj.square.name === square);
-        return val.wValue;
-      } else if (piece.type === "r") {
-        let val = rookSquareTable.find(obj => obj.square.name === square);
-        return val.wValue;
-      } else if (piece.type === "n") {
-        let val = knightSquareTable.find(obj => obj.square.name === square);
-        return val.wValue;
-      } else if (piece.type === "b") {
-        let val = bishopSquareTable.find(obj => obj.square.name === square);
-        return val.wValue;
-      } else if (piece.type === "q") {
-        let val = queenSquareTable.find(obj => obj.square.name === square);
-        return val.wValue;
-      } else if (piece.type === "k") {
-        let val = kingSquareTable.find(obj => obj.square.name === square);
-        return val.wValue;
-      }
-    } else {
-      if (piece.type === "p") {
-        let val = pawnSquareTable.find(obj => obj.square.name === square);
-        return val.bValue;
-      } else if (piece.type === "r") {
-        let val = rookSquareTable.find(obj => obj.square.name === square);
-        return val.bValue;
-      } else if (piece.type === "n") {
-        let val = knightSquareTable.find(obj => obj.square.name === square);
-        return val.bValue;
-      } else if (piece.type === "b") {
-        let val = bishopSquareTable.find(obj => obj.square.name === square);
-        return val.bValue;
-      } else if (piece.type === "q") {
-        let val = queenSquareTable.find(obj => obj.square.name === square);
-        return val.bValue;
-      } else if (piece.type === "k") {
-        let val = kingSquareTable.find(obj => obj.square.name === square);
-        return val.bValue;
-      }
-    }
-  };
-
-  let value = getAbsoluteValue(piece) + getSquareValue(piece, square);
-
-  if (piece.color === "w") {
-    return value;
-  } else {
-    return -value;
-  }
+const pstBlack = {
+  p: pstWhite['p'].slice().reverse(),
+  n: pstWhite['n'].slice().reverse(),
+  b: pstWhite['b'].slice().reverse(),
+  r: pstWhite['r'].slice().reverse(),
+  q: pstWhite['q'].slice().reverse(),
+  k: pstWhite['k'].slice().reverse()
 };
 
 
+const getPieceValue = function(board, square) {
+  const piece = board.get(square);
+  // console.log(piece);
+  if (piece === null) {
+    return 0;
+  }
+
+  const getAbsoluteValue = function(piece) {
+    var weights = {
+      p: 100,
+      n: 280,
+      b: 330,
+      r: 479,
+      q: 929,
+      k: 20000
+    };
+
+    try {
+      return weights[piece.type];
+    } catch (error) {
+    }
+
+    return 0;
+  };
+
+
+  const getSquareValue = function(piece, square) {
+    try {
+      // console.log(square);
+      const row = parseInt(square.charAt(1)) - 1;
+      const column = 'abcdefgh'.indexOf(square.charAt(0));
+
+      const value = piece.color === 'w' ? pstWhite[piece.type][row][column] : pstBlack[piece.type][row][column];
+
+      // console.log(value);
+      return value;
+    } catch (error) {
+      // console.log(error.message);
+    }
+
+    return 0;
+  };
+
+  const value = getAbsoluteValue(piece) + getSquareValue(piece, square);
+
+  return piece.color === 'w' ? value : -value;
+};
 
 
 const evaluateBoard = function(board) {
   let totalEvaluation = 0;
   board.SQUARES.forEach(square => {
-    totalEvaluation += getPieceValue(board.get(square), square);
+    totalEvaluation += getPieceValue(board, square);
   });
 
-  if (board.in_checkmate() && board.turn() === "b") {
-    return totalEvaluation + 100000;
-  } else if (board.in_checkmate() && board.turn() === "w") {
-    return totalEvaluation - 100000;
+  if (board.in_checkmate()) {
+    return board.turn() === 'b' ? totalEvaluation + 100000 : totalEvaluation - 100000;
   }
+
   return totalEvaluation;
 };
 
